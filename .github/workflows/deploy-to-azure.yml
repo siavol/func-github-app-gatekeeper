@@ -6,7 +6,7 @@ name: Build and deploy Node.js project to Azure Function App - func-github-gatek
 on:
   push:
     branches:
-      - initial-version
+      - main
   workflow_dispatch:
 
 env:
