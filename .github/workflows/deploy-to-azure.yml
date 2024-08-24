@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js project to Azure Function App - func-github-gatekeeper-dev
+name: Build and deploy to Azure Function App
 
 on:
   push:
@@ -15,6 +12,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '20.x' # set this to the node version to use (supports 8.x, 10.x, 12.x)
+  FUNCTION_APP_NAME: 'func-github-gatekeeper-dev'
 
 jobs:
   build:
@@ -64,18 +62,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
-      # - name: Login to Azure
-      #   uses: azure/login@v2
-      #   with:
-      #     client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2D6B6807FF0A4D6E81B5A02D9D958257 }}
-      #     tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B1821C425E84436D9ED244A4186D02CD }}
-      #     subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C17F9FBD894943A7A9B81CC187B7E334 }}
-
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'func-github-gatekeeper-dev'
+          app-name: ${{ env.FUNCTION_APP_NAME }}
           # slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
