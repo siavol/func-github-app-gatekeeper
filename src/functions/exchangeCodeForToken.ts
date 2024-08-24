@@ -3,7 +3,7 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 export async function exchangeCodeForToken(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
-    const code = request.query.get('code');
+    const code = request.query.get('github-code');
 
     const clientId = process.env.GITHUB_APP_CLIENT_ID
     const clientSecret = process.env.GITHUB_APP_CLIENT_SECRET
@@ -38,6 +38,6 @@ export async function exchangeCodeForToken(request: HttpRequest, context: Invoca
 
 app.http('exchangeCodeForToken', {
     methods: ['GET', 'POST'],
-    authLevel: 'anonymous',
+    authLevel: 'function',
     handler: exchangeCodeForToken
 });
