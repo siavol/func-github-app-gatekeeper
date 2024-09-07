@@ -18,7 +18,8 @@ export async function exchangeCodeForToken(request: HttpRequest, context: Invoca
         return {
             status: 500,
             body: JSON.stringify({
-                error: 'GitHub request failed'
+                error: 'GitHub request failed',
+                details
             })
         }
     }
